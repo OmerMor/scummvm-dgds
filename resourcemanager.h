@@ -26,7 +26,7 @@
 #ifndef DGDS_RESOURCEMANAGER_H
 #define DGDS_RESOURCEMANAGER_H
 
-#include "resource.h"
+#include "dgds/resources/resource.h"
 
 #include "common/file.h"
 #include "common/hash-str.h"

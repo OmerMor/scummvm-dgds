@@ -23,7 +23,7 @@
  *
  */
 
-#include "dgds/resource.h"
+#include "dgds/resources/resource.h"
 
 #include "common/file.h"
 

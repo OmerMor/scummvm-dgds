@@ -25,7 +25,7 @@
 
 #include "common/system.h"
 
-#include "dgds/palette.h"
+#include "dgds/resources/palette.h"
 
 namespace Dgds {
 

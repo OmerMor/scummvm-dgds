@@ -1,14 +1,14 @@
 MODULE := engines/dgds
 
 MODULE_OBJS = \
-	bmp.o \
+	resources/bmp.o \
+	resources/font.o \
+	resources/palette.o \
+	resources/resource.o \
 	compression.o \
 	detection.o \
 	dgds.o \
-	font.o \
 	game.o \
-	palette.o \
-	resource.o \
 	resourcemanager.o \
 	test.o
 
