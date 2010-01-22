@@ -23,7 +23,7 @@
  *
  */
 
-#include "dgds/font.h"
+#include "dgds/resources/font.h"
 
 #include "dgds/compression.h"
 

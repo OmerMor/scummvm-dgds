@@ -27,9 +27,9 @@
 #define TEST_H
 
 #include "dgds/resourcemanager.h"
-#include "dgds/palette.h"
-#include "dgds/bmp.h"
-#include "dgds/font.h"
+#include "dgds/resources/palette.h"
+#include "dgds/resources/bmp.h"
+#include "dgds/resources/font.h"
 
 namespace Dgds {
 

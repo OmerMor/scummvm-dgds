@@ -92,9 +92,11 @@ ResourceManager::ResourceManager(Common::String indexFilename) {
 			// Adjust the beginning of the contents to skip the previous read information
 			resourceFileInfo.offset += FILENAME_LEN + 4;
 
-			//printf("%s/%s: hash(%x) offset(%x) size(%x)\n", \
-				resourceFileInfo.fileName.c_str(), filename.c_str(), \
+			/*
+			printf("%s/%s: hash(%x) offset(%x) size(%x)\n",
+				resourceFileInfo.fileName.c_str(), filename.c_str(),
 				resourceFileInfo.hash, resourceFileInfo.offset, resourceFileInfo.size);
+			*/
 
 			// See if there's a tag
 			volumeFile.read(tmp, 4);

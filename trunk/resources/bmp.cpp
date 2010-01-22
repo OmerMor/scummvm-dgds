@@ -23,7 +23,7 @@
  *
  */
 
-#include "dgds/bmp.h"
+#include "dgds/resources/bmp.h"
 
 namespace Dgds {
 
