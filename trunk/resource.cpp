@@ -36,7 +36,7 @@ Resource::Resource(Common::SeekableReadStream *stream, bool hasSubres) :
 
 	if (hasSubres) {
 		// Find the tags
-		uint32 currentPos = 0;
+		int32 currentPos = 0;
 
 		while (currentPos + 4 < _stream->size()) {
 			ResourceInfo current;
