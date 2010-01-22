@@ -32,7 +32,7 @@ namespace Dgds {
 Common::MemoryReadStream* decompLZW(Common::SeekableReadStream *in, int size) {
 	byte *data = new byte[size];
 	LZW l(in, data);
-	Common::MemoryReadStream *stream = new Common::MemoryReadStream(data, size, true);
+	Common::MemoryReadStream *stream = new Common::MemoryReadStream(data, size, DisposeAfterUse::YES);
 	return stream;
 }
 
