@@ -36,7 +36,7 @@ namespace Dgds {
 class Test {
 public:
 	Test(ResourceManager *resMgr);
-	void drawBg();
+
 	void next();
 	Common::String getNext(Common::String ext);
 

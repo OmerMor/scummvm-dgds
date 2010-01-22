@@ -43,16 +43,6 @@ Test::Test(ResourceManager *resMgr) {
 	next();
 }
 
-void Test::drawBg() {
-	Graphics::Surface *screen = g_system->lockScreen();
-
-	for (int i = 0; i < 256; i++) {
- 		screen->vLine(i, 0, 199, i);
-	}
-
-	g_system->unlockScreen();
-}
-
 Common::String Test::getNext(Common::String ext) {
 	Common::String name;
 
@@ -69,7 +59,7 @@ Common::String Test::getNext(Common::String ext) {
 void Test::next() {
 	Common::String name;
 
-	drawBg();
+	g_system->fillScreen(0);
 
 	name = getNext("FNT");
 	printf("%s\n", name.c_str());
