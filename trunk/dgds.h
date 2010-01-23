@@ -34,7 +34,7 @@
 namespace Dgds {
 
 enum kDebug {
-	kDebugResources  = 1 << 0
+	kDebugResources = 1 << 0
 };
 
 class DgdsEngine : public Engine {
