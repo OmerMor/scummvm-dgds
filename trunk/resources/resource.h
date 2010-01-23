@@ -31,22 +31,6 @@
 
 namespace Dgds {
 
-enum ResourceTag {
-	TAG_ADS = 0x3a534441,
-	TAG_BMP = 0x3a504d42,
-	TAG_FNT = 0x3a544e46,
-	TAG_INF = 0x3a464e49,
-	TAG_PAG = 0x3a474150,
-	TAG_PAL = 0x3a4c4150,
-	TAG_RES = 0x3a534552,
-	TAG_SCR = 0x3a524353,
-	TAG_SND = 0x3a444e53,
-	TAG_TAG = 0x3a474154,
-	TAG_TT3 = 0x3a335454,
-	TAG_VER = 0x3a524556,
-	TAG_VGA = 0x3a414756
-};
-
 struct ResourceInfo {
 	uint32 offset;
 	uint32 size;
@@ -57,7 +41,7 @@ typedef Common::HashMap<Common::String, ResourceInfo, Common::IgnoreCase_Hash, C
 
 class Resource : public Common::SeekableReadStream {
 public:
-	Resource(Common::SeekableReadStream *stream, Common::String name, bool hasSubres);
+	Resource(Common::SeekableReadStream *stream, bool hasSubres);
 	~Resource();
 
 	Resource *getSubResource(Common::String const &tag);
@@ -76,11 +60,9 @@ public:
 	 */
 	Common::String to_s();
 
-	Common::String getName() { return _name; }
 private:
 	Resource *getSubResource(ResourceInfo const &subResourceInfo);
 
-	Common::String _name;
 	Common::SeekableReadStream *_stream;
 	SubResources _subResources;
 };

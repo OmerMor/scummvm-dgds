@@ -13,7 +13,16 @@
 
 namespace Dgds {
 
-Movie::Movie(Resource *res) {
+Movie::Movie() {
+}
+
+Movie::~Movie() {
+	// TODO Auto-generated destructor stub
+}
+
+bool Movie::init(Resource *res) {
+	bool ret = false;
+
 	Resource *ver = res->getSubResource("VER:");
 	if (!ver)
 		error("VER tag not found for Movie Resource");
@@ -30,14 +39,11 @@ Movie::Movie(Resource *res) {
 
 	tt3->seek(1);
 	uint32 size = tt3->readUint32LE();
-	Common::SeekableReadStream *decomp = decompRLE(tt3, size);
+	//Common::SeekableReadStream *decomp = decompRLE(tt3, size);
 
-	debugC(kDebugResources, "[%s] Version[%s] Pages[%d]", res->getName().c_str(), _version.c_str(), _pages);
+	debugC(kDebugResources, "[%s] Version[%s] Pages[%d]", name(), _version.c_str(), _pages);
 
-}
-
-Movie::~Movie() {
-	// TODO Auto-generated destructor stub
+	return ret;
 }
 
 } // end of namespace Dgds

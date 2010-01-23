@@ -29,22 +29,15 @@
 
 namespace Dgds {
 
-bool Palette::load(ResourceManager *resman, Common::String const &name) {
+bool Palette::init(Resource *res) {
 	bool ret = false;
 
-	Resource *res = resman->getResource(name);
-
-	if (res) {
-		Resource *resPAL = res->getSubResource("PAL:");
-		if (resPAL) {
-			ret = loadVGA(resPAL->getSubResource("VGA:"));
-			delete resPAL;
-		} else {
-			warning("The resource doesn't contain a palette");
-		}
-		delete res;
+	Resource *resPAL = res->getSubResource("PAL:");
+	if (resPAL) {
+		ret = loadVGA(resPAL->getSubResource("VGA:"));
+		delete resPAL;
 	} else {
-		warning("Couldn't find the resource");
+		warning("The resource doesn't contain a palette");
 	}
 
 	return ret;

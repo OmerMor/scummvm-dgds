@@ -27,16 +27,15 @@
 #include "graphics/surface.h"
 
 #include "dgds/test.h"
-#include "dgds/resources/movie.h"
 
 namespace Dgds {
 
 Test::Test(ResourceManager *resMgr) {
 	_resMgr = resMgr;
 
-	if(!_palette.load(_resMgr, "DYNAMIX.PAL")) {
-		printf("palette error\n");
-	}
+	if(!_palette.load(_resMgr, "DYNAMIX.PAL"))
+		error("palette error");
+
 	_palette.apply();
 
 	_step = 0;
@@ -98,7 +97,8 @@ void Test::next() {
 
 	name = getNext("TTM");
 	warning("Found %s", name.c_str());
-	Movie *m = new Movie(_resMgr->getResource(name));
+	_movie.load(_resMgr, name);
+	//Movie *m = new Movie(_resMgr->getResource(name));
 
 	g_system->updateScreen();
 }

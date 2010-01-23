@@ -37,19 +37,8 @@ Font::~Font() {
 	empty();
 }
 
-bool Font::load(ResourceManager *resman, Common::String const &name) {
-	bool ret = false;
-
-	Resource *res = resman->getResource(name);
-
-	if (res) {
-		ret = loadFNT(res->getSubResource("FNT:"));
-		delete res;
-	} else {
-		warning("Couldn't find the resource");
-	}
-
-	return ret;
+bool Font::init(Resource *res) {
+	return loadFNT(res->getSubResource("FNT:"));
 }
 
 void Font::empty() {

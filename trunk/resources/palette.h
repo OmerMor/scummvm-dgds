@@ -26,14 +26,18 @@
 #ifndef DGDS_PALETTE_H
 #define DGDS_PALETTE_H
 
-#include "dgds/resourcemanager.h"
+#include "taggedresource.h"
 
 namespace Dgds {
 
-class Palette {
+class Palette: public TaggedResource {
+
 public:
-	bool load(ResourceManager *resman, Common::String const &name);
 	void apply();
+
+protected:
+	bool init(Resource *res);
+
 private:
 	bool loadVGA(Resource *resVGA);
 

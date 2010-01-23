@@ -47,12 +47,13 @@ public:
 
 	Resource *getResource(Common::String const &resourceName);
 
+
 	void dumpResources(Common::String const &path, bool subres);
 
 	ResourceFiles _resourceFiles; //XXX: make private
 
 private:
-	Resource *getResource(Common::String const &resourceName, ResourceFileInfo const &resourceFileInfo);
+	Resource *getResource(ResourceFileInfo const &resourceFileInfo);
 
 	Common::String _currentOpenFilename;
 	Common::File   _currentOpenFile;

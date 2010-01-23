@@ -8,10 +8,9 @@
 #ifndef DGDS_MOVIE_H_
 #define DGDS_MOVIE_H_
 
-#include "common/str.h"
 #include "common/array.h"
 
-#include "resource.h"
+#include "taggedresource.h"
 
 namespace Dgds {
 
@@ -21,10 +20,13 @@ typedef struct MovieChunk {
 	Common::Array<int32> data;
 } MovieChunk;
 
-class Movie {
+class Movie : public TaggedResource {
 public:
-	Movie(Resource *res);
-	virtual ~Movie();
+	Movie();
+	~Movie();
+
+protected:
+	bool init(Resource *res);
 
 private:
 	Common::String _version;
