@@ -60,6 +60,8 @@ public:
 	 */
 	Common::String to_s();
 
+	void listTags();
+
 private:
 	Resource *getSubResource(ResourceInfo const &subResourceInfo);
 
