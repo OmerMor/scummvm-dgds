@@ -75,10 +75,12 @@ void Test::next() {
 
 	g_system->fillScreen(0);
 
+	/*
 	name = getNext("FNT");
 	if (_fnt)
 		delete _fnt;
 	_fnt = new Font();
+
 	if(_fnt->load(_resMgr, name)) {
 		Graphics::Surface *screen = g_system->lockScreen();
 		_fnt->drawString(screen, 10, 10, name.c_str(), 10);
@@ -86,17 +88,15 @@ void Test::next() {
 		_fnt->show(screen, 5, 40, 14);
 		g_system->unlockScreen();
 	}
-
+	*/
 
 	/*
-	//name = "DYNAMIX.PAL";
 	name = getNext("PAL");
-	printf("%s\n", name.c_str());
-	if(!_palette.load(_resMgr, name)) {
-		printf("palette error\n");
-	} else {
-		_palette.apply();
-	}
+	if (_palette)
+		delete _palette;
+	_palette = new Palette();
+	if(_palette->load(_resMgr, name))
+		_palette->apply();
 	*/
 
 	/*
@@ -108,11 +108,14 @@ void Test::next() {
 	}
 	*/
 
-	/*
+
 	name = getNext("TTM");
-	warning("Found %s", name.c_str());
-	_movie.load(_resMgr, name);
-	*/
+	if (_movie)
+		delete _movie;
+	_movie = new Movie();
+	_movie->load(_resMgr, name);
+
+
 
 	g_system->updateScreen();
 }
