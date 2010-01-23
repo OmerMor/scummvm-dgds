@@ -43,6 +43,11 @@ Test::Test(ResourceManager *resMgr) {
 	next();
 }
 
+Test::~Test() {
+	if (_fnt)
+		delete _fnt;
+}
+
 Common::String Test::getNext(Common::String ext) {
 	Common::String name;
 
@@ -61,19 +66,16 @@ void Test::next() {
 
 	g_system->fillScreen(0);
 
-	/*
 	name = getNext("FNT");
-	printf("%s\n", name.c_str());
-	if(!_fnt.load(_resMgr, name)) {
-		printf("font error\n");
-	} else {
+	_fnt = new Font();
+	if(_fnt->load(_resMgr, name)) {
 		Graphics::Surface *screen = g_system->lockScreen();
-		_fnt.drawString(screen, 10, 10, name.c_str(), 10);
-		_fnt.drawString(screen, 5, 20, "Dynamix Game Development System font example", 14);
-		_fnt.show(screen, 5, 40, 14);
+		_fnt->drawString(screen, 10, 10, name.c_str(), 10);
+		_fnt->drawString(screen, 5, 20, "Dynamix Game Development System font example", 14);
+		_fnt->show(screen, 5, 40, 14);
 		g_system->unlockScreen();
 	}
-	*/
+
 
 	/*
 	//name = "DYNAMIX.PAL";
@@ -95,10 +97,11 @@ void Test::next() {
 	}
 	*/
 
+	/*
 	name = getNext("TTM");
 	warning("Found %s", name.c_str());
 	_movie.load(_resMgr, name);
-	//Movie *m = new Movie(_resMgr->getResource(name));
+	*/
 
 	g_system->updateScreen();
 }
