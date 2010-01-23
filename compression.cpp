@@ -25,7 +25,8 @@
 
 #include "dgds/compression.h"
 
-#include <iostream>
+#include "common/textconsole.h" // for warning() :P
+
 
 namespace Dgds {
 
@@ -36,6 +37,27 @@ Common::MemoryReadStream* decompLZW(Common::SeekableReadStream *in, int size) {
 	return stream;
 }
 
+Common::MemoryReadStream* decompRLE(Common::SeekableReadStream *in, int size) {
+	byte *data = new byte[size];
+	int32 pos = -1;
+	while (!in->eos()) {
+		byte control = in->readByte();
+		if (control & 0x80) {
+			byte len = in->readByte();
+			for (int32 i = 0; i < len; i++)
+				data[pos++] = control & 0x7F;
+		} else {
+			for (int32 i = 0; i < control; i++)
+				data[pos++] = in->readByte();
+		}
+	}
+
+	if (pos != size)
+		warning ("decompRLE expected %d, wrote %d", size, pos);
+
+	Common::MemoryReadStream *stream = new Common::MemoryReadStream(data, size, DisposeAfterUse::YES);
+	return stream;
+}
 
 // LZW
 void LZW::SkipBits() {

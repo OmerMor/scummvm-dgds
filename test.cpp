@@ -27,6 +27,7 @@
 #include "graphics/surface.h"
 
 #include "dgds/test.h"
+#include "dgds/resources/movie.h"
 
 namespace Dgds {
 
@@ -61,6 +62,7 @@ void Test::next() {
 
 	g_system->fillScreen(0);
 
+	/*
 	name = getNext("FNT");
 	printf("%s\n", name.c_str());
 	if(!_fnt.load(_resMgr, name)) {
@@ -72,6 +74,7 @@ void Test::next() {
 		_fnt.show(screen, 5, 40, 14);
 		g_system->unlockScreen();
 	}
+	*/
 
 	/*
 	//name = "DYNAMIX.PAL";
@@ -82,7 +85,7 @@ void Test::next() {
 	} else {
 		_palette.apply();
 	}
-
+	*/
 
 	/*
 	name = getNext("BMP");
@@ -92,6 +95,10 @@ void Test::next() {
 		printf("bmp error\n");
 	}
 	*/
+
+	name = getNext("TTM");
+	warning("Found %s", name.c_str());
+	Movie *m = new Movie(_resMgr->getResource(name));
 
 	g_system->updateScreen();
 }

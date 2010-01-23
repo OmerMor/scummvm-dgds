@@ -39,6 +39,8 @@ DgdsEngine::DgdsEngine(OSystem *syst, Common::Language lang): Engine(syst), _lan
 	Common::addDebugChannel(kDebugResources, "Resources", "Debug Information for Resources");
 
 	g_eventRec.registerRandomSource(_rnd, "dgds");
+
+	Common::enableDebugChannel("Resources");
 }
 
 DgdsEngine::~DgdsEngine() {

@@ -3,6 +3,7 @@ MODULE := engines/dgds
 MODULE_OBJS = \
 	resources/bmp.o \
 	resources/font.o \
+	resources/movie.o \
 	resources/palette.o \
 	resources/resource.o \
 	compression.o \
