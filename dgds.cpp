@@ -68,9 +68,11 @@ Common::Error DgdsEngine::run() {
 	if (!_resMgr)
 		_resMgr = new ResourceManager("");
 
+	// XXX dump resources and tagged subresources
+	// to the specified folders
 	//_resMgr->dumpResources("dump_res/", false);
-	//_resMgr->dumpResources(_gameDataPath + "dump_subres/", true);
-	//return 0;
+	//_resMgr->dumpResources("dump_subres/", true);
+	//return Common::kNoError;
 
 	Common::String gameName = findGDS();
 	if(!gameName.size())
