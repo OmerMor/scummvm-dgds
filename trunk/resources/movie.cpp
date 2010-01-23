@@ -1,8 +1,26 @@
-/*
- * Movie.cpp
+/* ScummVM - Graphic Adventure Engine
  *
- *  Created on: Jan 22, 2010
- *      Author: alex
+ * ScummVM is the legal property of its developers, whose names
+ * are too numerous to list here. Please refer to the COPYRIGHT
+ * file distributed with this source distribution.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *
+ * $URL$
+ * $Id$
+ *
  */
 
 #include "dgds/resources/movie.h"
@@ -38,10 +56,10 @@ bool Movie::init(Resource *res) {
 	_pages   = pag->readUint16LE();
 
 	tt3->seek(1);
-	uint32 size = tt3->readUint32LE();
+	//uint32 size = tt3->readUint32LE();
 	//Common::SeekableReadStream *decomp = decompRLE(tt3, size);
 
-	debugC(kDebugResources, "[%s] Version[%s] Pages[%d]", name(), _version.c_str(), _pages);
+	debugC(kDebugResources, "[%s] Version[%s] Pages[%d]", getName(), _version.c_str(), _pages);
 
 	return ret;
 }
