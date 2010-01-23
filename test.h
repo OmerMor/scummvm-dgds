@@ -37,6 +37,7 @@ namespace Dgds {
 class Test {
 public:
 	Test(ResourceManager *resMgr);
+	~Test();
 
 	void next();
 	Common::String getNext(Common::String ext);
@@ -45,7 +46,7 @@ private:
 	ResourceManager *_resMgr;
 	Palette _palette;
 	Bmp     _bmp;
-	Font    _fnt;
+	Font    *_fnt;
 	Movie   _movie;
 
 	ResourceFiles::const_iterator _resIter;

@@ -38,7 +38,16 @@ Font::~Font() {
 }
 
 bool Font::init(Resource *res) {
-	return loadFNT(res->getSubResource("FNT:"));
+	bool ret = false;
+	Resource *fnt = res->getSubResource("FNT:");
+	if (fnt) {
+		ret = loadFNT(fnt);
+		delete fnt;
+	} else {
+		warning ("[%s] doesn't contain a FNT tag", getName());
+	}
+
+	return ret;
 }
 
 void Font::empty() {
@@ -61,57 +70,53 @@ bool Font::loadFNT(Resource *resFNT) {
 
 	bool ret = false;
 
-	if (resFNT) {
+	_sizex = resFNT->readByte();
+	if (_sizex == 0xFF) {
+		// Complex font
 		_sizex = resFNT->readByte();
-		if (_sizex == 0xFF) {
-			// Complex font
-			_sizex = resFNT->readByte();
-			_sizey = resFNT->readByte();
-			_lineHeight = resFNT->readByte(); // sure?
-			_firstChar = resFNT->readByte();
-			_numChars = resFNT->readByte();
-			int16 size = resFNT->readUint16LE();
+		_sizey = resFNT->readByte();
+		_lineHeight = resFNT->readByte(); // sure?
+		_firstChar = resFNT->readByte();
+		_numChars = resFNT->readByte();
+		int16 size = resFNT->readUint16LE();
 
-			byte comprMethod = resFNT->readByte();
-			int32 size2 = resFNT->readUint32LE();
-			assert (comprMethod == 2);
-			assert (size == size2);
+		byte comprMethod = resFNT->readByte();
+		int32 size2 = resFNT->readUint32LE();
+		assert (comprMethod == 2);
+		assert (size == size2);
 
-			Common::SeekableReadStream *decomp = decompLZW(resFNT, size2);
+		Common::SeekableReadStream *decomp = decompLZW(resFNT, size2);
 
-			// Get the beginning of each character
-			_offsets = new uint16[_numChars];
-			for (int i = 0; i < _numChars; i++) {
-				_offsets[i] = decomp->readUint16LE();
-				//if (_offsets[i] != i * 8)
-					//printf("WARNING: got %d expected %d\n", size, i * 8);
-			}
-
-			// Get the width of the characters
-			_widths = new uint8[_numChars];
-			decomp->read(_widths, _numChars);
-
-			// Read the face of the characters
-			_faces = new byte[_sizey * _numChars];
-			decomp->read(_faces, _sizey * _numChars);
-			delete decomp;
-			ret = true;
-
-		} else {
-			// Simple font
-			_sizey = resFNT->readByte();
-			_firstChar = resFNT->readByte();
-			_numChars = resFNT->readByte();
-
-			_faces = new byte[_sizey * _numChars];
-			resFNT->read(_faces, _sizey * _numChars);
-			ret = true;
+		// Get the beginning of each character
+		_offsets = new uint16[_numChars];
+		for (int i = 0; i < _numChars; i++) {
+			_offsets[i] = decomp->readUint16LE();
+			//if (_offsets[i] != i * 8)
+				//printf("WARNING: got %d expected %d\n", size, i * 8);
 		}
-		delete resFNT;
-		printf("size(%dx%d) first(%d) number(%d)\n", _sizex, _sizey, _firstChar, _numChars);
+
+		// Get the width of the characters
+		_widths = new uint8[_numChars];
+		decomp->read(_widths, _numChars);
+
+		// Read the face of the characters
+		_faces = new byte[_sizey * _numChars];
+		decomp->read(_faces, _sizey * _numChars);
+		delete decomp;
+		ret = true;
+
 	} else {
-		warning("The resource doesn't contain a font");
+		// Simple font
+		_sizey = resFNT->readByte();
+		_firstChar = resFNT->readByte();
+		_numChars = resFNT->readByte();
+
+		_faces = new byte[_sizey * _numChars];
+		resFNT->read(_faces, _sizey * _numChars);
+		ret = true;
 	}
+	printf("size(%dx%d) first(%d) number(%d)\n", _sizex, _sizey, _firstChar, _numChars);
+
 
 	return ret;
 }
