@@ -26,16 +26,17 @@
 #ifndef DGDS_BMP_H
 #define DGDS_BMP_H
 
-#include "dgds/resourcemanager.h"
+#include "taggedresource.h"
 
 namespace Dgds {
 
-class Bmp {
+class Bmp: public TaggedResource {
 public:
 	Bmp();
 	~Bmp();
 
-	bool load(ResourceManager *resman, Common::String const &name);
+protected:
+	bool init(Resource *res);
 
 private:
 	void empty();

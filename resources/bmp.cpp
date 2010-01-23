@@ -49,27 +49,21 @@ void Bmp::empty() {
 	}
 }
 
-bool Bmp::load(ResourceManager *resman, Common::String const &name) {
+bool Bmp::init(Resource *res) {
 	empty();
 
 	bool ret = false;
 
-	Resource *res = resman->getResource(name);
-
-	if (res) {
-		Resource *resBMP = res->getSubResource("BMP:");
-		if (resBMP) {
-			ret = loadINF(resBMP->getSubResource("INF:"));
-			if (ret)
-				ret = loadOFF(resBMP->getSubResource("OFF:"));
-			delete resBMP;
-		} else {
-			warning("The resource doesn't contain a bitmap");
-		}
-		delete res;
+	Resource *resBMP = res->getSubResource("BMP:");
+	if (resBMP) {
+		ret = loadINF(resBMP->getSubResource("INF:"));
+		if (ret)
+			ret = loadOFF(resBMP->getSubResource("OFF:"));
+		delete resBMP;
 	} else {
-		warning("Couldn't find the resource");
+		warning("The resource doesn't contain a bitmap");
 	}
+	delete res;
 
 	return ret;
 }

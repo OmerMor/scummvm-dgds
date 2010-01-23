@@ -29,8 +29,8 @@
 
 namespace Dgds {
 
-Resource::Resource(Common::SeekableReadStream *stream, Common::String name, bool hasSubres) :
-	_stream(stream), _name(name) {
+Resource::Resource(Common::SeekableReadStream *stream, bool hasSubres) :
+	_stream(stream) {
 
 	assert (stream);
 
@@ -89,7 +89,7 @@ Resource *Resource::getSubResource(Common::String const &tag) {
 Resource *Resource::getSubResource(ResourceInfo const &subResourceInfo) {
 	// Return the substream corresponding to the subresource
 	return new Resource(new Common::SeekableSubReadStream(_stream, subResourceInfo.offset,
-		subResourceInfo.offset + subResourceInfo.size), _name, subResourceInfo.hasSubres);
+		subResourceInfo.offset + subResourceInfo.size), subResourceInfo.hasSubres);
 }
 
 void Resource::dump(Common::String const &outFilename, bool dumpSubres) {

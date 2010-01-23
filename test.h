@@ -30,6 +30,7 @@
 #include "dgds/resources/palette.h"
 #include "dgds/resources/bmp.h"
 #include "dgds/resources/font.h"
+#include "dgds/resources/movie.h"
 
 namespace Dgds {
 
@@ -43,8 +44,9 @@ public:
 private:
 	ResourceManager *_resMgr;
 	Palette _palette;
-	Bmp _bmp;
-	Font _fnt;
+	Bmp     _bmp;
+	Font    _fnt;
+	Movie   _movie;
 
 	ResourceFiles::const_iterator _resIter;
 

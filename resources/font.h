@@ -28,20 +28,23 @@
 
 #include "graphics/surface.h"
 
-#include "dgds/resourcemanager.h"
+#include "taggedresource.h"
 
 namespace Dgds {
 
-class Font {
+class Font: public TaggedResource {
 public:
 	Font();
 	~Font();
 
-	bool load(ResourceManager *resman, Common::String const &name);
 	bool drawChar(Graphics::Surface *surf, int screenx, int screeny, char c, int color);
 	bool drawString(Graphics::Surface *surf, int screenx, int screeny, const char *str, int color);
 
 	void show(Graphics::Surface *surf, int screenx, int screeny, int color);
+
+protected:
+	bool init(Resource *res);
+
 private:
 	void empty();
 
