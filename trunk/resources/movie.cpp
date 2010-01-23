@@ -56,8 +56,12 @@ bool Movie::init(Resource *res) {
 	_pages   = pag->readUint16LE();
 
 	tt3->seek(1);
-	//uint32 size = tt3->readUint32LE();
-	//Common::SeekableReadStream *decomp = decompRLE(tt3, size);
+	uint32 size = tt3->readUint32LE();
+	Common::SeekableReadStream *decomp = decompLZW(tt3, size);
+
+	Resource *r = new Resource(decomp, false);
+	r->dump(Common::String(getName()) + Common::String(".TT3.LZW"), false);
+	delete r;
 
 	debugC(kDebugResources, "[%s] Version[%s] Pages[%d]", getName(), _version.c_str(), _pages);
 
