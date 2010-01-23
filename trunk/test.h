@@ -44,10 +44,10 @@ public:
 
 private:
 	ResourceManager *_resMgr;
-	Palette _palette;
-	Bmp     _bmp;
+	Palette *_palette;
+	Bmp     *_bmp;
 	Font    *_fnt;
-	Movie   _movie;
+	Movie   *_movie;
 
 	ResourceFiles::const_iterator _resIter;
 

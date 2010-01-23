@@ -33,12 +33,15 @@ namespace Dgds {
 Test::Test(ResourceManager *resMgr) {
 	_resMgr = resMgr;
 
-	if(!_palette.load(_resMgr, "DYNAMIX.PAL"))
-		error("palette error");
+	_palette = new Palette();
+	if(_palette->load(_resMgr, "DYNAMIX.PAL"))
+		_palette->apply();
 
-	_palette.apply();
+	_fnt   = 0;
+	_bmp   = 0;
+	_movie = 0;
+	_step  = 0;
 
-	_step = 0;
 	_resIter = _resMgr->_resourceFiles.begin();
 	next();
 }
@@ -46,6 +49,12 @@ Test::Test(ResourceManager *resMgr) {
 Test::~Test() {
 	if (_fnt)
 		delete _fnt;
+	if (_bmp)
+		delete _bmp;
+	if (_movie)
+		delete _movie;
+	if (_palette)
+		delete _palette;
 }
 
 Common::String Test::getNext(Common::String ext) {
@@ -67,6 +76,8 @@ void Test::next() {
 	g_system->fillScreen(0);
 
 	name = getNext("FNT");
+	if (_fnt)
+		delete _fnt;
 	_fnt = new Font();
 	if(_fnt->load(_resMgr, name)) {
 		Graphics::Surface *screen = g_system->lockScreen();
