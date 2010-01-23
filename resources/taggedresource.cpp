@@ -24,6 +24,9 @@
  */
 
 #include "dgds/resources/taggedresource.h"
+#include "dgds/dgds.h"
+
+#include "common/debug.h"
 
 namespace Dgds {
 
@@ -42,6 +45,7 @@ bool TaggedResource::load(ResourceManager *resman, Common::String name) {
 	bool ret = false;
 
 	if (res) {
+		debugC(kDebugResources, "Loading [%s]", name.c_str());
 		ret = init(res);
 		delete res;
 	} else
