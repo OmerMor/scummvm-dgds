@@ -82,8 +82,18 @@ Resource *Resource::getSubResource(Common::String const &tag) {
 
 	if (_subResources.contains(tag1))
 		return getSubResource(_subResources.getVal(tag1));
-	else
+	else {
+		warning("tag [%s] not found", tag1.c_str());
 		return NULL;
+	}
+}
+
+void Resource::listTags() {
+	SubResources::const_iterator subresIter = _subResources.begin();
+	while (subresIter != _subResources.end()) {
+		printf("%s\n", subresIter->_key.c_str());
+		++subresIter;
+	}
 }
 
 Resource *Resource::getSubResource(ResourceInfo const &subResourceInfo) {
