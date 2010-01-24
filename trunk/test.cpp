@@ -42,6 +42,7 @@ Test::Test(ResourceManager *resMgr) {
 	_movie = 0;
 	_step  = 0;
 	_anim  = 0;
+	_snd   = 0;
 
 	_resIter = _resMgr->_resourceFiles.begin();
 	next();
@@ -58,6 +59,8 @@ Test::~Test() {
 		delete _palette;
 	if (_anim)
 		delete _anim;
+	if (_snd)
+		delete _snd;
 }
 
 Common::String Test::getNext(Common::String ext) {
@@ -111,13 +114,13 @@ void Test::next() {
 	}
 	*/
 
-
+	/*
 	name = getNext("TTM");
 	if (_movie)
 		delete _movie;
 	_movie = new Movie();
 	_movie->load(_resMgr, name);
-
+	*/
 
 	/*
 	name = getNext("ADS");
@@ -125,6 +128,10 @@ void Test::next() {
 	_anim = new Animation();
 	_anim->load(_resMgr, name);
 	*/
+
+	name = "WILLYSND.SX";
+	_snd = new SoundResource();
+	_snd->load(_resMgr, name);
 
 	g_system->updateScreen();
 }

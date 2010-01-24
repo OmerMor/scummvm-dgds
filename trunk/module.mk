@@ -7,6 +7,7 @@ MODULE_OBJS = \
 	resources/movie.o \
 	resources/palette.o \
 	resources/resource.o \
+	resources/soundresource.o \
 	resources/taggedresource.o \
 	compression.o \
 	detection.o \

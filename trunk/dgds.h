@@ -27,6 +27,7 @@
 #define DGDS_H
 
 #include "engines/engine.h"
+#include "common/debug.h"
 
 #include "dgds/game.h"
 #include "dgds/resourcemanager.h"
