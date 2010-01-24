@@ -36,7 +36,7 @@ Animation::~Animation() {
 	if (_script)
 		delete _script;
 
-	_animationMap.empty();
+	_animationMap.clear();
 }
 
 bool Animation::init(Resource *res) {
