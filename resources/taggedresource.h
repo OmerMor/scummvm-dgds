@@ -26,7 +26,7 @@
 #ifndef DGDS_TAGGEDRESOURCE_H_
 #define DGDS_TAGGEDRESOURCE_H_
 
-#include "common/debug.h" // for debugC?
+#include "common/hash-str.h"
 
 #include "dgds/resourcemanager.h"
 #include "dgds/dgds.h"
@@ -48,6 +48,18 @@ enum ResourceTag {
 	TAG_VER = 0x3a524556,
 	TAG_VGA = 0x3a414756
 };
+
+struct ResourceEntry {
+	uint16 id;
+	Common::String name;
+	Common::String filename;
+};
+
+/**
+ * ResourceTags are key-value pairs read from a Resources
+ * subresource of TAG_TAG.
+ */
+typedef Common::HashMap<uint16, ResourceEntry> ResourceTags;
 
 class TaggedResource {
 public:

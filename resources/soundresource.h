@@ -23,42 +23,34 @@
  *
  */
 
-#ifndef TEST_H
-#define TEST_H
+#ifndef DGDS_SOUNDRESOURCE_H_
+#define DGDS_SOUNDRESOURCE_H_
 
-#include "dgds/resourcemanager.h"
-#include "dgds/resources/palette.h"
-#include "dgds/resources/bmp.h"
-#include "dgds/resources/font.h"
-#include "dgds/resources/movie.h"
-#include "dgds/resources/animation.h"
-#include "dgds/resources/soundresource.h"
-
+#include "dgds/resources/taggedresource.h"
 
 namespace Dgds {
 
-class Test {
+/**
+ * DGDS Sound Resources are contained in *.SX files.
+ * They are split into four (4) tag groups:
+ *   TAG_TAG
+ *   TAG_DAT
+ *   TAG_FNM
+ *   TAG_INF
+ */
+class SoundResource: public TaggedResource {
 public:
-	Test(ResourceManager *resMgr);
-	~Test();
+	SoundResource();
+	virtual ~SoundResource();
 
-	void next();
-	Common::String getNext(Common::String ext);
+protected:
+	bool init(Resource *res);
 
 private:
-	ResourceManager *_resMgr;
-	Palette *_palette;
-	Bmp     *_bmp;
-	Font    *_fnt;
-	Movie   *_movie;
-	Animation *_anim;
-	SoundResource *_snd;
+	ResourceTags _tags;
 
-	ResourceFiles::const_iterator _resIter;
+}; // end of class SoundResource
 
-	int _step;
-};
+} // end of namespace Dgds
 
-} // End of namespace Dgds
-
-#endif // TEST_H
+#endif /* DGDS_SOUNDRESOURCE_H_ */
