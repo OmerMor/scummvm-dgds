@@ -1,6 +1,7 @@
 MODULE := engines/dgds
 
 MODULE_OBJS = \
+	resources/animation.o \
 	resources/bmp.o \
 	resources/font.o \
 	resources/movie.o \

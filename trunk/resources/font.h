@@ -28,7 +28,7 @@
 
 #include "graphics/surface.h"
 
-#include "taggedresource.h"
+#include "dgds/resources/taggedresource.h"
 
 namespace Dgds {
 

@@ -28,7 +28,7 @@
 
 #include "common/array.h"
 
-#include "taggedresource.h"
+#include "dgds/resources/taggedresource.h"
 
 namespace Dgds {
 
