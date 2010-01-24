@@ -111,19 +111,20 @@ void Test::next() {
 	}
 	*/
 
-	/*
+
 	name = getNext("TTM");
 	if (_movie)
 		delete _movie;
 	_movie = new Movie();
 	_movie->load(_resMgr, name);
-	*/
 
+
+	/*
 	name = getNext("ADS");
 	if (_anim) delete _anim;
 	_anim = new Animation();
 	_anim->load(_resMgr, name);
-
+	*/
 
 	g_system->updateScreen();
 }
