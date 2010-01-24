@@ -26,7 +26,10 @@
 #ifndef DGDS_TAGGEDRESOURCE_H_
 #define DGDS_TAGGEDRESOURCE_H_
 
+#include "common/debug.h" // for debugC?
+
 #include "dgds/resourcemanager.h"
+#include "dgds/dgds.h"
 
 namespace Dgds {
 

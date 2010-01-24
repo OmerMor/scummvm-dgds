@@ -26,7 +26,7 @@
 #ifndef DGDS_BMP_H
 #define DGDS_BMP_H
 
-#include "taggedresource.h"
+#include "dgds/resources/taggedresource.h"
 
 namespace Dgds {
 

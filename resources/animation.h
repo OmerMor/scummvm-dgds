@@ -23,39 +23,36 @@
  *
  */
 
-#ifndef TEST_H
-#define TEST_H
+#ifndef DGDS_ANIMATION_H_
+#define DGDS_ANIMATION_H_
 
-#include "dgds/resourcemanager.h"
-#include "dgds/resources/palette.h"
-#include "dgds/resources/bmp.h"
-#include "dgds/resources/font.h"
-#include "dgds/resources/movie.h"
-#include "dgds/resources/animation.h"
+#include "dgds/resources/taggedresource.h"
 
 namespace Dgds {
 
-class Test {
-public:
-	Test(ResourceManager *resMgr);
-	~Test();
-
-	void next();
-	Common::String getNext(Common::String ext);
-
-private:
-	ResourceManager *_resMgr;
-	Palette *_palette;
-	Bmp     *_bmp;
-	Font    *_fnt;
-	Movie   *_movie;
-	Animation *_anim;
-
-	ResourceFiles::const_iterator _resIter;
-
-	int _step;
+struct AnimationInfo {
+	Common::String name;
+	Common::String resource;
 };
 
-} // End of namespace Dgds
+typedef Common::HashMap<Common::String, AnimationInfo, Common::IgnoreCase_Hash, Common::IgnoreCase_EqualTo> AnimationMap;
 
-#endif // TEST_H
+class Animation: public TaggedResource {
+public:
+	Animation();
+	virtual ~Animation();
+
+protected:
+	bool init(Resource *res);
+
+private:
+	Resource *_script;
+	Common::String _version;
+
+	AnimationMap _animationMap;
+
+}; // end of class Animation
+
+} // end of namespace Dgds
+
+#endif /* DGDS_ANIMATION_H_ */

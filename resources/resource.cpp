@@ -98,8 +98,12 @@ void Resource::listTags() {
 
 Resource *Resource::getSubResource(ResourceInfo const &subResourceInfo) {
 	// Return the substream corresponding to the subresource
-	return new Resource(new Common::SeekableSubReadStream(_stream, subResourceInfo.offset,
-		subResourceInfo.offset + subResourceInfo.size), subResourceInfo.hasSubres);
+	Common::SeekableSubReadStream *stream = new Common::SeekableSubReadStream(_stream,
+			subResourceInfo.offset,
+			subResourceInfo.offset + subResourceInfo.size);
+	Resource *sub = new Resource(stream, subResourceInfo.hasSubres);
+
+	return sub;
 }
 
 void Resource::dump(Common::String const &outFilename, bool dumpSubres) {

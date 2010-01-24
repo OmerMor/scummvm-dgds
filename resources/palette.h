@@ -26,7 +26,7 @@
 #ifndef DGDS_PALETTE_H
 #define DGDS_PALETTE_H
 
-#include "taggedresource.h"
+#include "dgds/resources/taggedresource.h"
 
 namespace Dgds {
 

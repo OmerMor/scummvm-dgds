@@ -23,39 +23,54 @@
  *
  */
 
-#ifndef TEST_H
-#define TEST_H
-
-#include "dgds/resourcemanager.h"
-#include "dgds/resources/palette.h"
-#include "dgds/resources/bmp.h"
-#include "dgds/resources/font.h"
-#include "dgds/resources/movie.h"
 #include "dgds/resources/animation.h"
+#include "dgds/compression.h"
 
 namespace Dgds {
 
-class Test {
-public:
-	Test(ResourceManager *resMgr);
-	~Test();
+Animation::Animation() {
+	_script = 0;
+}
 
-	void next();
-	Common::String getNext(Common::String ext);
+Animation::~Animation() {
+	if (_script)
+		delete _script;
+}
 
-private:
-	ResourceManager *_resMgr;
-	Palette *_palette;
-	Bmp     *_bmp;
-	Font    *_fnt;
-	Movie   *_movie;
-	Animation *_anim;
+bool Animation::init(Resource *res) {
+	bool ret = false;
 
-	ResourceFiles::const_iterator _resIter;
+	Resource *ver = res->getSubResource("VER:");
+	Resource *ads = res->getSubResource("ADS:");
+	Resource *adsres = ads->getSubResource("RES:");
+	Resource *scr    = ads->getSubResource("SCR:");
 
-	int _step;
-};
+	if (ver == NULL || adsres == NULL || scr == NULL)
+		return ret;
 
-} // End of namespace Dgds
+	_version = ver->to_s();
+	delete ver;
 
-#endif // TEST_H
+	scr->seek(0);
+	if (scr->readByte() != 0x02)
+		error("[%s] Script Data Corruption", getName());
+
+	uint32 size = scr->readUint32LE();
+
+	assert(size != (uint32)scr->size());
+	//Common::SeekableReadStream *decomp = decompLZW(scr, size);
+	delete scr;
+	//_script = new Resource(decomp, false);
+
+	adsres->seek(0);
+	uint32 resCount = adsres->readUint16LE();
+
+	delete adsres;
+	delete ads;
+
+	debugC(kDebugResources, "[%s] Version[%s] ResourceItems[%d]", getName(), _version.c_str(), resCount);
+
+	return ret;
+}
+
+} // end of namespace Dgds
