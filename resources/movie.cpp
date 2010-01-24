@@ -32,7 +32,7 @@ Movie::Movie() {
 }
 
 Movie::~Movie() {
-	// TODO Auto-generated destructor stub
+	_chunks.clear();
 }
 
 bool Movie::init(Resource *res) {
@@ -49,13 +49,40 @@ bool Movie::init(Resource *res) {
 		error ("TT3 tag not found for Movie Resource");
 
 	_version = ver->to_s();
+	delete ver;
 
 	pag->seek(0);
-	_pages   = pag->readUint16LE();
+	_pages = pag->readUint16LE();
+	delete pag;
 
 	tt3->seek(1);
-	uint32 size = tt3->readUint32LE();
-	Common::SeekableReadStream *decomp = decompLZW(tt3, size);
+	uint32 tt3size = tt3->readUint32LE();
+	Common::SeekableReadStream *decomp = decompLZW(tt3, tt3size);
+	Resource *chunkdata = new Resource(decomp, false);
+
+	while (!chunkdata->eos()) {
+		MovieChunk *mc = new MovieChunk;
+		uint32 code = chunkdata->readUint16LE();
+		uint32 size = code & 0x000F;
+		code &= 0xFFF0;
+		mc->code = code;
+		if (code == 0x1110 && size == 1) {
+			uint32 id = chunkdata->readUint16LE();
+			printf("%d\n", id);
+			mc->data.push_back(id);
+		} else if (size == 15) {
+			mc->name = chunkdata->to_s(false);
+			if ((chunkdata->size() - chunkdata->pos()) & 1)
+				chunkdata->skip(1);
+		} else {
+			for (uint32 i = 0; i < size; i++)
+				mc->data.push_back(chunkdata->readSint16LE());
+		}
+		_chunks.push_back(mc);
+	}
+
+	delete chunkdata;
+	delete tt3;
 
 	/*
 	Resource *r = new Resource(decomp, false);
@@ -65,10 +92,10 @@ bool Movie::init(Resource *res) {
 
 	debugC(kDebugResources, "[%s] Version[%s] Pages[%d]", getName(), _version.c_str(), _pages);
 
-	delete ver;
-	delete pag;
-	delete tt3;
-	delete decomp;
+
+
+
+
 
 	return ret;
 }

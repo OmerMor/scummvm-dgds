@@ -32,11 +32,11 @@
 
 namespace Dgds {
 
-typedef struct MovieChunk {
+struct MovieChunk {
 	uint32 code;
 	Common::String name;
 	Common::Array<int32> data;
-} MovieChunk;
+};
 
 class Movie : public TaggedResource {
 public:
