@@ -64,11 +64,18 @@ bool Animation::init(Resource *res) {
 
 	adsres->seek(0);
 	uint32 resCount = adsres->readUint16LE();
+	for (uint32 i = 0; i < resCount; i++) {
+		adsres->skip(2); // skip over the index
+		_animationMap.push_back(adsres->to_s(false));
+	}
 
 	delete adsres;
 	delete ads;
 
 	debugC(kDebugResources, "[%s] Version[%s] ResourceItems[%d]", getName(), _version.c_str(), resCount);
+	for (uint32 i = 0; i < _animationMap.size(); i++) {
+		debugC(kDebugResources, "Resource %2d: %s", i + 1, _animationMap[i].c_str());
+	}
 
 	return ret;
 }
