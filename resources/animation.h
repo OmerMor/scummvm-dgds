@@ -27,15 +27,9 @@
 #define DGDS_ANIMATION_H_
 
 #include "dgds/resources/taggedresource.h"
+#include "common/array.h"
 
 namespace Dgds {
-
-struct AnimationInfo {
-	Common::String name;
-	Common::String resource;
-};
-
-typedef Common::HashMap<Common::String, AnimationInfo, Common::IgnoreCase_Hash, Common::IgnoreCase_EqualTo> AnimationMap;
 
 class Animation: public TaggedResource {
 public:
@@ -49,7 +43,12 @@ private:
 	Resource *_script;
 	Common::String _version;
 
-	AnimationMap _animationMap;
+	/**
+	 * The animation map is a list of files loaded from an ADS
+	 * RES file that contains filenames and an index. Since the index
+	 * is incremental, theres no need to make this a hashmap.
+	 */
+	Common::Array<Common::String> _animationMap;
 
 }; // end of class Animation
 

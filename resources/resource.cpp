@@ -136,10 +136,11 @@ void Resource::dump(Common::String const &outFilename, bool dumpSubres) {
 	}
 }
 
-Common::String Resource::to_s() {
+Common::String Resource::to_s(bool rewind) {
 	Common::String out = "";
 
-	_stream->seek(0);
+	if (rewind)
+		_stream->seek(0);
 	while (!_stream->eos()) {
 		byte b = _stream->readByte();
 		if (b)
