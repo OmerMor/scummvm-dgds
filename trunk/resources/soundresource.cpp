@@ -48,8 +48,6 @@ bool SoundResource::init(Resource *res) {
 	Resource *tag = snd->getSubResource("TAG:");
 	Resource *fnm = snd->getSubResource("FNM:");
 
-	snd->getSubResourceCollection("DAT:");
-
 	if (inf == NULL || tag == NULL || fnm == NULL)
 		return ret;
 
