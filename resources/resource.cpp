@@ -67,32 +67,50 @@ Resource::Resource(Common::SeekableReadStream *stream, bool hasSubres) :
 			}
 
 			currentPos = current.offset + current.size;
-
-			_subResources.setVal(tag, current);
+			current.tag = tag;
+			_subResources.push_back(current);
 		}
 	}
 }
 
 Resource::~Resource() {
 	delete _stream;
+	_subResources.clear();
+}
+
+void Resource::listTags() {
+	for (uint32 i = 0; i < _subResources.size(); i++) {
+		printf("%s\n", _subResources[i].tag.c_str());
+		break;
+	}
+}
+
+Common::Array<Resource *> Resource::getSubResourceCollection(Common::String const &tag) {
+	Common::Array<Resource *> col;
+	printf("%d\n", _subResources.size());
+
+	return col;
+}
+
+Resource *Resource::hasSubResource(Common::String const &tag) {
+	for (uint32 i = 0; i < _subResources.size(); i++) {
+		ResourceInfo sub = _subResources[i];
+		if (sub.tag == tag)
+			return getSubResource(sub);
+	}
+
+	return 0;
 }
 
 Resource *Resource::getSubResource(Common::String const &tag) {
 	Common::String tag1(tag.c_str(), 3);
+	Resource *sub = hasSubResource(tag1);
 
-	if (_subResources.contains(tag1))
-		return getSubResource(_subResources.getVal(tag1));
+	if (sub)
+		return sub;
 	else {
 		warning("tag [%s] not found", tag1.c_str());
 		return NULL;
-	}
-}
-
-void Resource::listTags() {
-	SubResources::const_iterator subresIter = _subResources.begin();
-	while (subresIter != _subResources.end()) {
-		printf("%s\n", subresIter->_key.c_str());
-		++subresIter;
 	}
 }
 
@@ -108,12 +126,12 @@ Resource *Resource::getSubResource(ResourceInfo const &subResourceInfo) {
 
 void Resource::dump(Common::String const &outFilename, bool dumpSubres) {
 	if (dumpSubres && _subResources.size() > 0) {
-		SubResources::const_iterator subresIter = _subResources.begin();
-		while (subresIter != _subResources.end()) {
-			Resource *subres = getSubResource(subresIter->_value);
-			subres->dump(outFilename + "." + subresIter->_key, dumpSubres);
+		for (uint32 i = 0; i < _subResources.size(); i++) {
+			Resource *subres = getSubResource(_subResources[i]);
+			// append the iterator value to the filename to handle
+			// subresource collections (so filenames aren't overwritten)
+			subres->dump(outFilename + "." + _subResources[i].tag + i, dumpSubres);
 			delete subres;
-			++subresIter;
 		}
 	} else {
 		//printf("%s\n", outFilename.c_str());

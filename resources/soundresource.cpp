@@ -44,20 +44,35 @@ bool SoundResource::init(Resource *res) {
 	if (snd == NULL)
 		return ret;
 
-	Resource *dat = snd->getSubResource("DAT:");
 	Resource *inf = snd->getSubResource("INF:");
 	Resource *tag = snd->getSubResource("TAG:");
 	Resource *fnm = snd->getSubResource("FNM:");
 
-	if (dat == NULL || inf == NULL || tag == NULL || fnm == NULL)
+	snd->getSubResourceCollection("DAT:");
+
+	if (inf == NULL || tag == NULL || fnm == NULL)
 		return ret;
 
 	tag->seek(0);
 	uint16 tagcount = tag->readUint16LE();
 
+	Common::Array<Resource *> dat = snd->getSubResourceCollection("DAT:");
+	printf ("Found %c Data Entries", dat.size());
+
 	for (uint16 i = 0; i < tagcount; i++) {
 		uint16 tagid = tag->readUint16LE();
 		Common::String tagval = tag->to_s(false);
+
+		Resource *entryData = 0;
+		for (int32 j = 0; j < dat.size(); j++) {
+			uint16 entryId = dat[j]->readUint16LE();
+			if (entryId == tagid) {
+				entryData = dat.remove_at(j);
+				break;
+			}
+		}
+
+		assert(entryData == 0);
 
 		ResourceEntry entry;
 		entry.id   = tagid;
@@ -66,6 +81,14 @@ bool SoundResource::init(Resource *res) {
 		_tags.setVal(tagid, entry);
 	}
 	delete tag;
+
+	// clean any additional entries left
+	// NOTE this technically shouldn't be necessary as all
+	// elements should be accounted for ... but for now ...
+	for (uint32 i = 0; i < dat.size(); i++)
+		delete dat[i];
+
+	dat.clear();
 
 	// XXX there's a VERY good chance that the FNM tag processing
 	// can be skipped entirely, as it looks like (A) the filenames
@@ -85,19 +108,13 @@ bool SoundResource::init(Resource *res) {
 		printf("%d:%s:%s\n", iter->_value.id, iter->_value.name.c_str(), iter->_value.filename.c_str());
 		++iter;
 	}
-	*/
+	// */
 
 	// XXX skipping TAG_INF for the sound resource as it appears
 	// to contain nothing more than a list of the sound resource
 	// id values, which we've already parsed when we processed
 	// the TAG_TAG data
 	delete inf;
-
-	// TODO figure out what the TAG_DAT contains, as we've already got
-	// a list of the sound resource (files) that we'll need to use along
-	// with each resource entry
-	delete dat;
-
 
 	return true; //ret;
 }
