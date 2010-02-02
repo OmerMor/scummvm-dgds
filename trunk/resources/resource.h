@@ -27,17 +27,18 @@
 #define DGDS_RESOURCE_H
 
 #include "common/stream.h"
-#include "common/hash-str.h"
+#include "common/array.h"
+#include "common/str.h"
+#include "common/debug.h"
 
 namespace Dgds {
 
 struct ResourceInfo {
+	Common::String tag;
 	uint32 offset;
 	uint32 size;
 	bool hasSubres;
 };
-
-typedef Common::HashMap<Common::String, ResourceInfo, Common::IgnoreCase_Hash, Common::IgnoreCase_EqualTo> SubResources;
 
 class Resource : public Common::SeekableReadStream {
 public:
@@ -45,6 +46,7 @@ public:
 	~Resource();
 
 	Resource *getSubResource(Common::String const &tag);
+	Common::Array<Resource *> getSubResourceCollection(Common::String const &tag);
 
 	void dump(Common::String const &outFilename, bool dumpSubres);
 
@@ -65,11 +67,14 @@ public:
 
 	void listTags();
 
+protected:
+	Resource *hasSubResource(Common::String const &tag);
+
 private:
 	Resource *getSubResource(ResourceInfo const &subResourceInfo);
 
 	Common::SeekableReadStream *_stream;
-	SubResources _subResources;
+	Common::Array<ResourceInfo> _subResources;
 };
 
 } // End of namespace Dgds

@@ -53,6 +53,7 @@ struct ResourceEntry {
 	uint16 id;
 	Common::String name;
 	Common::String filename;
+	byte *data;
 };
 
 /**
