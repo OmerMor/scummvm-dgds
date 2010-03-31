@@ -28,6 +28,7 @@
 
 #include "engines/engine.h"
 #include "common/debug.h"
+#include "common/random.h"
 
 #include "dgds/game.h"
 #include "dgds/resourcemanager.h"
