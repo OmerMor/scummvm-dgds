@@ -23,31 +23,31 @@
  *
  */
 
-#include "common/EventRecorder.h"
+#include "common/config-manager.h"
+#include "common/debug-channels.h"
 #include "common/system.h"
-#include "common/file.h"
-#include "common/fs.h"
-#include "common/events.h"
+#include "common/savefile.h"
+#include "common/EventRecorder.h"
+
+#include "engines/util.h"
 
 #include "dgds/dgds.h"
-
 #include "dgds/test.h"
 
 namespace Dgds {
 
 DgdsEngine::DgdsEngine(OSystem *syst, Common::Language lang): Engine(syst), _language(lang), _resMgr(NULL) {
-	Common::addDebugChannel(kDebugResources, "Resources", "Debug Information for Resources");
+	DebugMan.addDebugChannel(kDebugResources, "Resources", "Debug Information for Resources");
 
 	g_eventRec.registerRandomSource(_rnd, "dgds");
-
-	Common::enableDebugChannel("Resources");
+	DebugMan.enableDebugChannel("Resources");
 }
 
 DgdsEngine::~DgdsEngine() {
 	if (_resMgr)
 		delete _resMgr;
 
-	Common::clearAllDebugChannels();
+	DebugMan.clearAllDebugChannels();
 }
 
 Common::Error DgdsEngine::init() {
